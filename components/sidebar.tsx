@@ -8,9 +8,11 @@ import { cn } from "@/lib/utils";
 import { 
     Code, 
     ImageIcon, 
+    ImagePlay, 
     LayoutDashboard, 
     MessageSquare, 
     Music, 
+    ScrollText, 
     Settings, 
     VideoIcon 
 } from "lucide-react";
@@ -35,28 +37,46 @@ const routes = [
         color: "text-violet-500", 
     },
     {
-        label: "Image Generation",
+        label: "Code Generation",
+        icon: Code,
+        href: "/Code",
+        color: "text-green-700", 
+    },
+    {
+        label: "Text to Image",
         icon: ImageIcon,
-        href: "/ImageGeneration",
+        href: "/Image",
         color: "text-pink-700", 
     },
     {
-        label: "Video Generation",
+        label: "Video summarizer",
+        icon: ScrollText,
+        href: "/Summarize",
+        color: "text-cyan-700", 
+    },
+    {
+        label: "Image to art",
         icon: VideoIcon,
-        href: "/VideoGeneration",
+        href: "/Art",
+        color: "text-cyan-700", 
+    },
+    {
+        label: "Text to Video",
+        icon: VideoIcon,
+        href: "/Video",
         color: "text-orange-700", 
     },
     {
-        label: "Music Generation",
-        icon: Music,
-        href: "/MusicGeneration",
-        color: "text-emerald-500", 
+        label: "Image to Video",
+        icon: ImagePlay,
+        href: "/Image-to-Video",
+        color: "text-orange-500", 
     },
     {
-        label: "Code Generation",
-        icon: Code,
-        href: "/CodeGeneration",
-        color: "text-green-700", 
+        label: "Text to Music",
+        icon: Music,
+        href: "/Music",
+        color: "text-emerald-500", 
     },
     {
         label: "Settings",
@@ -74,8 +94,8 @@ const Sidebar = () => {
                     <div className="relative w-8 h-8 mr-4">
                         <Image fill src={"/logo.png"} alt={"Logo"} />
                     </div>
-                    <h1 className={cn("text-2xl font-bold ", montserrat.className)}>
-                        Master-AI
+                    <h1 className="text-2xl font-bold font-roboto">
+                        AI Buddy
                     </h1>
                 </Link>
                 <div className="space-y-1">

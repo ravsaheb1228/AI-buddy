@@ -1,6 +1,9 @@
 @tailwind base;
   @tailwind components;
   @tailwind utilities;
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
 
   @layer base {
     :root {
@@ -64,6 +67,123 @@
       --input: 217.2 32.6% 17.5%;
       --ring: 212.7 26.8% 83.9%;
     }
+    .response-content {
+      color: #f3f4f6;
+      line-height: 1.6;
+    }
+    
+    .response-content h2 {
+        color: #a855f7;
+        margin-bottom: 1rem;
+    }
+    
+    .response-content ul {
+        margin-bottom: 1rem;
+    }
+    
+    .response-content p {
+        margin-bottom: 1rem;
+    }
+    .code-response {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border-radius: 4px;
+      padding: 16px;
+      overflow-x: auto;
+      margin-top: 8px;
+    }
+
+    .code-response pre {
+        margin: 0;
+        padding: 0;
+    }
+
+    .code-response code {
+        color: #dcdcdc;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .bgAnimatedGradient {
+      background: linear-gradient(270deg, #ff7eb3, #ff758c, #ff7eb3, #ff758c);
+      background-size: 400% 400%;
+      animation: gradientAnimation 8s ease infinite;
+    }
+    
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .neonButton {
+        color: #fff;
+        background-color: transparent;
+        border: 2px solid #00ffff;
+        border-radius: 12px;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+    }
+    
+    .neonButton:hover {
+        background-color: #00ffff;
+        color: #000;
+        box-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff;
+    }
+    
+    .crazyHeading {
+        font-size: 7rem;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        background: linear-gradient(90deg, #f35626, #feab3a);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        animation: neonGlow 1.5s ease-in-out infinite alternate;
+    }
+    
+    @keyframes neonGlow {
+        0% {
+            text-shadow: 0 0 10px #f35626, 0 0 20px #f35626, 0 0 30px #f35626, 0 0 40px #feab3a, 0 0 70px #feab3a, 0 0 80px #feab3a, 0 0 100px #feab3a;
+        }
+        100% {
+            text-shadow: 0 0 20px #feab3a, 0 0 30px #feab3a, 0 0 40px #feab3a, 0 0 50px #f35626, 0 0 60px #f35626, 0 0 70px #f35626, 0 0 80px #f35626;
+        }
+    }
+    
+    .tiltEffect:hover {
+        transform: rotate(5deg) scale(1.1);
+        transition: transform 0.5s ease;
+    }
+    
+    .footerIcons a {
+        transition: transform 0.2s ease, color 0.2s ease;
+    }
+    
+    .footerIcons a:hover {
+        transform: translateY(-5px) scale(1.2);
+        color: #ff758c;
+    }
+
+    @keyframes wave-animation {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+    
+    .wavy-text {
+      background: linear-gradient(90deg, #fc466b, #3f5efb, #42e695, #00d4ff, #7f00ff, #ff00ff, #39ff14);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: wave-animation 5s ease infinite;
+    }    
+  
   }
 
   @layer base {

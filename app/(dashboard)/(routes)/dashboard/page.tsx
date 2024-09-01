@@ -7,8 +7,11 @@ import {
   ArrowRight,
   Code, 
   ImageIcon, 
+  ImagePlay, 
   MessageSquare, 
   Music,  
+  Paintbrush,  
+  ScrollText,  
   VideoIcon 
 } from "lucide-react";
 
@@ -17,72 +20,76 @@ const tools = [
     label: "Conversation",
     icon: MessageSquare,
     href: "/Conversation",
-    color: "text-violet-500",
-    bgColor: "bg-violet-500/10" 
-  },
-  {
-    label: "Image Generation",
-    icon: ImageIcon,
-    href: "/ImageGeneration",
-    color: "text-pink-700",
-    bgColor: "bg-pink-500/10" 
-  },
-  {
-    label: "Video Generation",
-    icon: VideoIcon,
-    href: "/VideoGeneration",
-    color: "text-orange-700",
-    bgColor: "bg-orange-500/10" 
-  },
-  {
-    label: "Music Generation",
-    icon: Music,
-    href: "/MusicGeneration",
-    color: "text-emerald-500",
-    bgColor: "bg-emerald-500/10" 
+    color: "text-cyan-200",
+    bgColor: "bg-gradient-to-r from-blue-700 via-cyan-500 to-teal-400", 
   },
   {
     label: "Code Generation",
     icon: Code,
-    href: "/CodeGeneration",
-    color: "text-green-700",
-    bgColor: "bg-green-500/10" 
+    href: "/Code",
+    color: "text-purple-200",
+    bgColor: "bg-gradient-to-r from-purple-700 via-violet-500 to-purple-300" 
+  },
+  {
+    label: "Text to Image",
+    icon: ImageIcon,
+    href: "/Image",
+    color: "text-cyan-200",
+    bgColor: "bg-gradient-to-r from-emerald-500 via-cyan-500 to-indigo-500" 
+  },
+  {
+    label: "Video summarize",
+    icon: ScrollText,
+    href: "/Summarize",
+    color: "text-cyan-200",
+    bgColor: "bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500",
+  },  
+  {
+    label: "Text to Video",
+    icon: VideoIcon,
+    href: "/Video",
+    color: "text-pink-100",
+    bgColor: "bg-gradient-to-r from-pink-300 via-blue-300 to-green-300", 
+  },
+  {
+    label: "Text to Music",
+    icon: Music,
+    href: "/Music",
+    color: "text-blue-200",
+    bgColor:  "bg-gradient-to-r from-blue-300 via-blue-400 to-teal-500", 
   }
-
 ]
+
 const DashboardPage = () => {
   const router = useRouter();
   return (
-    <div>
-      <div className="mb-8 space-y-4">
-        <h2 className="text-2xl mb:text-4xl font-bold text-center">
-          Explore the power of AI
+    <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 min-h-screen py-10">
+      <div className="text-center mb-8 px-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-white font-roboto">
+          AI Tools for the Next Generation
         </h2>
-        <p className="text-muted-foreground font-light text-sm md:text-lg text-center">
-          Chat with the smartest AI- Experience the power of AI
+        <p className="text-gray-300 font-light text-base md:text-lg font-montserrat mt-2">
+          Empowering the innovators of tomorrow with cutting-edge AI tools today.
         </p>
       </div>
-      <div className="px-4 md:px-20 lg:px-32 space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-20 lg:px-32">
         {tools.map((tool) => (
           <Card
-          onClick={() => router.push(tool.href)}
-          key={tool.href}
-          className="p-2 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer">
-            <div className="flex items-center gap-x-4 ">
-              <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                <tool.icon className={cn("w-8 h-8", tool.color)}/>
-              </div>
-              <div className="font-semibold">
-                {tool.label}
-              </div>
+            onClick={() => router.push(tool.href)}
+            key={tool.href}
+            className="font-roboto p-6 border border-gray-700 flex flex-col items-center justify-center hover:shadow-lg transition-all cursor-pointer bg-gray-800 hover:bg-gray-700 hover:shadow-indigo-500 text-white transform hover:scale-100"
+          >
+            <div className={cn("p-4 w-fit rounded-full", tool.bgColor)}>
+              <tool.icon className={cn("w-12 h-12", tool.color)} />
             </div>
-            <ArrowRight className="w-5 h-5"/>
+            <div className=" font-semibold text-lg text-center">
+              {tool.label}
+            </div>
           </Card>
         ))}
       </div>
     </div>
-
-  )
+  );
 }
 
 export default DashboardPage;
