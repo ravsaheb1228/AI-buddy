@@ -1,8 +1,7 @@
-
 import { useSession } from "next-auth/react";
 import Image from 'next/image'; // Ensure correct import
 
-export const UserAvatar = () => {
+export default function UserInfo() {
     const { status, data: session } = useSession();
 
     return (
@@ -14,6 +13,9 @@ export const UserAvatar = () => {
                 width={25}
                 height={25}
             />
+            <div>
+                <span className='text-white'> {session?.user?.name}</span>
+            </div>
         </div>
     )
 }

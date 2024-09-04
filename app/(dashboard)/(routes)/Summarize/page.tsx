@@ -129,7 +129,7 @@ export default function Home() {
             {/* Summary content */}
             {summary && (
               <div className="p-6 rounded-lg shadow-md bg-gray-900 w-full max-w-2xl mt-4">
-                <p className="text-white font-lora">{summary}</p>
+                <p className="text-white">{summary}</p>
               </div>
             )}
 

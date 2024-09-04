@@ -55,22 +55,10 @@ const routes = [
         color: "text-cyan-700", 
     },
     {
-        label: "Image to art",
-        icon: VideoIcon,
-        href: "/Art",
-        color: "text-cyan-700", 
-    },
-    {
         label: "Text to Video",
         icon: VideoIcon,
         href: "/Video",
         color: "text-orange-700", 
-    },
-    {
-        label: "Image to Video",
-        icon: ImagePlay,
-        href: "/Image-to-Video",
-        color: "text-orange-500", 
     },
     {
         label: "Text to Music",
