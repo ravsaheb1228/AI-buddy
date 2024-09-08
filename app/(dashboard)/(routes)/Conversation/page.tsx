@@ -7,92 +7,84 @@ import SpeechRecognitionComponent from "@/components/speechrecognition";
 import { UserAvatar } from "@/components/user-avatar";
 import { Heading } from "@/components/heading";
 import { useSession } from "next-auth/react";
+import ChatHistory from "@/components/ChatHistory";
 
 interface ResponseEntry {
     question: string;
     answer: string;
 }
 
+interface ConversationEntry {
+    role: 'user' | 'assistant';
+    content: string;
+}
+
 export default function Home() {
     const [prompt, setPrompt] = useState('');
     const [responses, setResponses] = useState<ResponseEntry[]>([]);
+    const [conversationHistory, setConversationHistory] = useState<ConversationEntry[]>([]);
     const [loading, setLoading] = useState(false);
-    // const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>(null);
     const [speechActive, setSpeechActive] = useState(false);
     const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-    const { data: session } = useSession(); // Get session data
+    const { data: session } = useSession();
+    const [currentPrompt, setCurrentPrompt] = useState('');
+    const [currentResponse, setCurrentResponse] = useState('');
 
-    // const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const file = event.target.files?.[0];
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             setImageSrc(reader.result);
-    //         };
-    //         reader.readAsDataURL(file);
+    const handleChatSelect = (prompt: string, response: string) => {
+        setCurrentPrompt(prompt);
+        setCurrentResponse(response);
+        setConversationHistory([
+            { role: 'user', content: prompt },
+            { role: 'assistant', content: response }
+        ]);
+    };
 
-    //         const formData = new FormData();
-    //         formData.append('image', file);
-
-    //         setLoading(true);
-
-    //         try {
-    //             const response = await fetch('/api/image-search', {
-    //                 method: 'POST',
-    //                 body: formData,
-    //             });
-
-    //             const data = await response.json();
-
-    //             setResponses(prevResponses => [
-    //                 { question: 'Image Search', answer: formatResponse(response.ok ? data.output : data.error) },
-    //                 ...prevResponses
-    //             ]);
-    //         } catch (error) {
-    //             console.error(error);
-    //             setResponses(prevResponses => [
-    //                 { question: 'Image Search', answer: formatResponse('An error occurred.') },
-    //                 ...prevResponses
-    //             ]);
-    //         }
-
-    //         setLoading(false);
-    //     }
-    // };
-
+    
     const generateText = async () => {
         if (prompt.trim() === '') return;
-    
+
         setLoading(true);
         try {
+            const newConversationHistory: ConversationEntry[] = [
+                ...conversationHistory,
+                { role: 'user', content: prompt }
+            ];
+
             const response = await fetch('/api/conversation', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ body: prompt })
+                body: JSON.stringify({ 
+                    body: prompt,
+                    conversationHistory: newConversationHistory
+                })
             });
-    
+
             const data = await response.json();
             const formattedResponse = formatResponse(response.ok ? data.output : data.error);
-    
-            // Ensure session is not null and handle the case where email might be missing
-            const email = session?.user?.email ?? 'unknown@example.com'; // Default email if session or user is not available
-    
-            // Save the data to the database, include the user's email
+
+            const email = session?.user?.email ?? 'unknown@example.com';
+
             await fetch('/api/ChatHistory', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     email,
                     prompt,
-                    response: data.output,
+                    response: formattedResponse,
                 })
             });
-    
+
             setResponses(prevResponses => [
                 { question: prompt, answer: formattedResponse },
                 ...prevResponses
             ]);
+
+            setConversationHistory([
+                ...newConversationHistory,
+                { role: 'assistant', content: formattedResponse }
+            ]);
+
             setPrompt('');
         } catch (error) {
             console.error(error);
@@ -103,12 +95,12 @@ export default function Home() {
             setPrompt('');
         }
         setLoading(false);
-    };    
+    };
 
     const extractTextFromHtml = (html: string): string => {
         const div = document.createElement('div');
         div.innerHTML = html;
-        return div.textContent || div.innerText || ''; // Extract plain text
+        return div.textContent || div.innerText || '';
     };
 
     const formatResponse = (text: string): string => {
@@ -168,8 +160,6 @@ export default function Home() {
     };
 
     useEffect(() => {
-        // window.addEventListener('keydown', handleKeyDown);
-        // document.addEventListener('autoSearch', generateText);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('autoSearch', generateText);
@@ -181,12 +171,12 @@ export default function Home() {
             const availableVoices = window.speechSynthesis.getVoices();
             setVoices(availableVoices);
             if (availableVoices.length > 0) {
-                setSelectedVoice(availableVoices[0]); // Set default voice
+                setSelectedVoice(availableVoices[0]);
             }
         };
 
         updateVoices();
-        window.speechSynthesis.onvoiceschanged = updateVoices; // Update voices when they change
+        window.speechSynthesis.onvoiceschanged = updateVoices;
     }, []);
 
     return (
@@ -215,14 +205,28 @@ export default function Home() {
                             <p className="ml-4">Master is thinking...</p>
                         </div>
                     ) : responses.length === 0 ? (
-                        <div className="p-6 w-full max-w-2xl mx-auto mt-24 flex items-center justify-center shadow-md border rounded-md text-white">
-                            <Heading
-                                title={"Conversation"}
-                                description={"Summarize any YouTube video quickly with our cutting-edge summarization tool."}
-                                icon={MessageSquare}
-                                iconColor={"text-cyan-200"}
-                                bgColor={"bg-gradient-to-r from-blue-700 via-cyan-500 to-teal-400"}
-                            />
+                        <div>
+                            <div className="p-6 w-full max-w-2xl mx-auto mt-24 flex items-center justify-center shadow-md border rounded-md text-white">
+                                <Heading
+                                    title={"Conversation"}
+                                    description={"Summarize any YouTube video quickly with our cutting-edge summarization tool."}
+                                    icon={MessageSquare}
+                                    iconColor={"text-cyan-200"}
+                                    bgColor={"bg-gradient-to-r from-blue-700 via-cyan-500 to-teal-400"}
+                                />
+                            </div>
+                            <div className="w-full">
+                                <ChatHistory onChatSelect={handleChatSelect} />
+                            </div>
+                            <div className="w-full">
+                                {/* Your existing chat interface */}
+                                <div>
+                                    <p>{currentPrompt}</p>
+                                </div>
+                                <div>
+                                    <p>{currentResponse}</p>
+                                </div>
+                            </div>
                         </div>
                     ) : (
                         <div className="font-montserrat space-y-4 p-8 w-full flex flex-col gap-x-8">
