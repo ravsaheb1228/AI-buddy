@@ -17,11 +17,8 @@ const LandingPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <Image fill src={"/logo.png"} alt={"Logo"} className="rounded-full" />
                 </motion.div>
-                <h1 className="text-3xl font-bold text-gray-800 ml-4 tracking-wider">
-                    AI Buddy
-                </h1>
+                
                 <div className="flex ml-auto space-x-6">
                     <Link href="/signin">
                         <Button className="text-base border border-blue-600 text-white hover:bg-blue-600 hover:text-white px-6 py-2 rounded-full transition duration-300">

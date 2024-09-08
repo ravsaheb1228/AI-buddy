@@ -75,9 +75,9 @@ const DashboardPage = () => {
 
   return (
     <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 min-h-screen py-10">
-      <div className="text-center mb-8 px-4 mt-14">
+      <div className="text-center mb-8 mt-14 mx-20">
         {session && (
-          <div className="text-start mx-20">
+          <div className="text-start">
             <p className="mb-2  wavy-text text-6xl md:text-5xl font-bold text-white mx-auto text-start inline-block font-lora">
               Hey {session.user?.name}, welcome to AI Buddy!
             </p>
@@ -90,9 +90,7 @@ const DashboardPage = () => {
         )}
       </div>
 
-
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-20 lg:px-32">
+      <div className="grid grid-cols-1 items-center  sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-20 lg:px-32 ">
         {tools.map((tool) => (
           <Card
             onClick={() => router.push(tool.href)}

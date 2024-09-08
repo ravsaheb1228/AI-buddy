@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import SpeechRecognitionComponent from "@/components/speechrecognition";
 import { UserAvatar } from "@/components/user-avatar";
 import { Heading } from "@/components/heading";
+import { useSession } from "next-auth/react";
 
 interface ResponseEntry {
     question: string;
@@ -20,6 +21,7 @@ export default function Home() {
     const [speechActive, setSpeechActive] = useState(false);
     const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
     const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+    const { data: session } = useSession(); // Get session data
 
     // const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     //     const file = event.target.files?.[0];
@@ -61,7 +63,7 @@ export default function Home() {
 
     const generateText = async () => {
         if (prompt.trim() === '') return;
-
+    
         setLoading(true);
         try {
             const response = await fetch('/api/conversation', {
@@ -69,11 +71,26 @@ export default function Home() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ body: prompt })
             });
-
+    
             const data = await response.json();
-
+            const formattedResponse = formatResponse(response.ok ? data.output : data.error);
+    
+            // Ensure session is not null and handle the case where email might be missing
+            const email = session?.user?.email ?? 'unknown@example.com'; // Default email if session or user is not available
+    
+            // Save the data to the database, include the user's email
+            await fetch('/api/ChatHistory', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    prompt,
+                    response: data.output,
+                })
+            });
+    
             setResponses(prevResponses => [
-                { question: prompt, answer: formatResponse(response.ok ? data.output : data.error) },
+                { question: prompt, answer: formattedResponse },
                 ...prevResponses
             ]);
             setPrompt('');
@@ -86,7 +103,7 @@ export default function Home() {
             setPrompt('');
         }
         setLoading(false);
-    };
+    };    
 
     const extractTextFromHtml = (html: string): string => {
         const div = document.createElement('div');

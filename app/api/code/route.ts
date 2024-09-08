@@ -11,21 +11,34 @@ export async function POST(req: Request) {
 
         const data = await req.json();
         const prompt = data.body;
-        const isCodeGeneration = data.isCodeGeneration; // Expecting a flag in the request body
+        const isCodeGeneration = data.isCodeGeneration; // Flag to identify code generation
+        const isExplanation = data.isExplanation; // Flag to identify explanation request
 
-        // Check if the request is for code generation
-        if (!isCodeGeneration) {
-            return NextResponse.json({ error: "This endpoint is only for code generation requests." }, { status: 400 });
+        // Check if neither code generation nor explanation is requested
+        if (!isCodeGeneration && !isExplanation) {
+            return NextResponse.json({ error: "Specify either code generation or explanation in the request." }, { status: 400 });
         }
 
-        // Generate content using the AI model
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const output = await response.text();
+        let output = "";
 
-        return NextResponse.json({ output: output });
+        // Handle code generation request
+        if (isCodeGeneration) {
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            output = await response.text();
+        }
+
+        // Handle code explanation request
+        if (isExplanation) {
+            const explanationPrompt = `Explain this code briefly: ${prompt}`;
+            const result = await model.generateContent(explanationPrompt);
+            const response = await result.response;
+            output = await response.text();
+        }
+
+        return NextResponse.json({ output });
     } catch (error) {
-        console.error("Error generating code:", error);
-        return NextResponse.json({ error: "An error occurred while generating code." }, { status: 500 });
+        console.error("Error generating code or explanation:", error);
+        return NextResponse.json({ error: "An error occurred while processing the request." }, { status: 500 });
     }
 }
