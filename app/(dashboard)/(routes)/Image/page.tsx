@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 import { CircleEllipsis, Download, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/user-avatar";
+import { Loader } from "@/components/loader";
 
 interface ApiError {
   error: string;
@@ -67,8 +68,8 @@ export default function Home() {
 
   return (
     <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 min-h-screen flex flex-col items-center justify-center py-5 font-roboto">
-      <div className="w-full max-w-3xl px-4">
-        <div className="bg-gray-800 border border-gray-700 rounded-full p-4 flex space-x-2 mb-8">
+      <div className="w-full max-w-3xl p-4 mt-16">
+        <div className="bg-gray-800 border border-gray-700 rounded-full p-4 flex space-x-2 mb-8 sticky top-16">
           <Button
             onClick={generateImage}
             className="text-white p-2 rounded-full hover:bg-cyan-600 transition-transform transform hover:scale-105"
@@ -88,9 +89,8 @@ export default function Home() {
         </div>
 
         {loading ? (
-          <div className="flex justify-center items-center h-64 text-white">
-            <CircleEllipsis className="animate-spin text-purple-500 mr-3" size={48} />
-            <p>Generating image...</p>
+          <div className="p-8 rounded-lg w-full flex items-center justify-center">
+            <Loader />
           </div>
         ) : generatedImage ? (
           <div>
@@ -121,7 +121,7 @@ export default function Home() {
             </div>
           </div>
         ) : (
-          <p className="text-center text-gray-400 font-lora text-3xl wavy-text">Every great image starts with a simple idea. Let your imagination guide you!</p>
+          <p className="text-center text-white font-lora text-3xl">Every great things starts with a simple idea. Let your imagination guide you!</p>
         )}
       </div>
     </div>

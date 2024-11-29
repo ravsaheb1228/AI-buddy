@@ -81,9 +81,9 @@ export default function Home() {
   return (
     <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 min-h-screen flex flex-col items-center p-4">
       <div className="container mx-auto p-4 lg:p-8 w-full max-w-2xl flex flex-col items-center">
-        
+
         {/* Centered Input Field */}
-        <div className="w-full max-w-3xl px-4 mb-8 flex justify-center z-10 mt-10">
+        <div className="w-full max-w-3xl px-4 mb-8 flex justify-center z-10 mt-16">
           <div className="bg-gray-800 border border-gray-700 rounded-full p-4 lg:p-3 flex items-center space-x-4 w-full">
             <form onSubmit={handleSubmit} className="w-full flex items-center justify-center">
               <input
@@ -97,12 +97,12 @@ export default function Home() {
                 className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white p-3 rounded-full hover:scale-105 transform transition-transform ml-4"
                 disabled={loading}
               >
-                {loading ?  <Loader className="animate-spin spin-out-180"></Loader> : 'Summarize'}
+                {loading ? <Loader className="animate-spin spin-out-180"></Loader> : 'Summarize'}
               </Button>
             </form>
           </div>
         </div>
-        
+
         {/* Embed the YouTube video and display response here */}
         <div className="mt-6 w-full flex flex-col items-center">
           {/* Embed the YouTube video */}
@@ -113,11 +113,10 @@ export default function Home() {
                 <iframe
                   src={`https://www.youtube.com/embed/${videoId}`}
                   frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   title="YouTube Video"
                   className="absolute top-0 left-0 w-full h-full rounded-lg"
-                ></iframe>
+                />
               </div>
             </div>
           )}

@@ -52,23 +52,25 @@ export default function MusicPage() {
     };
    
     return(
-        <div>
-            <Heading
-            title={"Music generator"}
-            description={"Our most advanced conversation model."}
-            icon={MusicIcon}
-            iconColor="text-emerald-500"
-            bgColor="bg-emerald-500/10"
-            />
+        <div className="mt-16 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 min-h-screen">
+            <div className="w-full max-w-2xl text-white">
+                <Heading
+                title={"Music generator"}
+                description={"Our most advanced conversation model."}
+                icon={MusicIcon}
+                iconColor="text-emerald-500"
+                bgColor="bg-emerald-500/10"
+                />
+            </div>
             <div className="px-4 lg:px-8">
                 <Form {...form}>
                     <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2" >
                         <FormField name="prompt" render={({ field }) => (
-                            <FormItem className="col-span-12 lg:col-span-10">
+                            <FormItem className="col-span-12 lg:col-span-10 text-white">
                                 <FormControl className="m-0 p-0">
-                                    <Input className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent" disabled={isLoading} placeholder="send Message" {...field}/>
+                                    <Input className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent bg-slate-800 px-2" disabled={isLoading} placeholder="send Message" {...field}/>
 
 
                                 </FormControl>
@@ -80,7 +82,7 @@ export default function MusicPage() {
                     </form>
                 </Form>
             </div>
-            <div className="space-y-4 mt-8">
+            <div className="space-y-4 mt-8 p-6">
                 {isLoading && (
                     <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
                         <Loader />

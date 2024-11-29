@@ -1,3 +1,4 @@
+// app/api/getChatHistory
 import { NextRequest, NextResponse } from 'next/server';
 import { connect } from '@/lib/config/dbConfig';
 import User from '@/lib/models/auth';

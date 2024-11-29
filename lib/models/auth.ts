@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { randomUUID } from "crypto";
+import { number } from "zod";
  // Import bcrypt for password hashing
 
 // Chat Schema
@@ -22,6 +23,13 @@ const chatSchema = new mongoose.Schema({
   },
 });
 
+// const apiUsage = new mongoose.Schema({
+//   userId: {type: String},
+//   modelName: {type: String},
+//   date: {type: String},
+//   count: {type: number}
+// })
+
 // User Schema
 const userSchema = new mongoose.Schema({
   name: {
@@ -39,6 +47,11 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
   },
   chats: [chatSchema], // Embedding chatSchema for chat history
+  // hasSubscription: {
+  //   type: Boolean,
+  //   Defaul: false
+  // },
+  // UsageCount: [apiUsage]
 });
 
 // Model Creation

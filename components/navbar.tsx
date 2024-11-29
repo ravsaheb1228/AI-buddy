@@ -37,7 +37,7 @@ const Navbar = () => {
             {/* Left section with logo and title */}
             <div className="flex flex-row items-center">
                 <img src={"/logo.png"} alt={"Logo"} className="rounded-full w-8 h-8" />
-                <h1 className="text-xl font-bold font-sans text-white ml-4 tracking-wider whitespace-nowrap">
+                <h1 className="text-xl font-bold font-sans text-white ml-4 tracking-wider whitespace-nowrap hidden md:block">
                     AI Buddy
                 </h1>
             </div>
@@ -48,6 +48,7 @@ const Navbar = () => {
             {/* Right section with dropdown and user info */}
             <div className="flex w-full justify-end">
                 <div className="relative flex w-full justify-end space-x-3 items-center">
+                    {/* <DarkModeToggle/> */}
                     <UserInfo />
                     <div onClick={toggleDropdown}>
                         {dropdownOpen ? (

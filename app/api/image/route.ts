@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       {
         headers: {
           ...form.getHeaders(),
-          Authorization: `Bearer ${process.env.STABILITY_API_KEY}`, // Replace with your API key
+          Authorization: `Bearer ${process.env.STABILITY_API_KEY_V}`, // Replace with your API key
           Accept: 'image/*',
         },
         responseType: 'arraybuffer',

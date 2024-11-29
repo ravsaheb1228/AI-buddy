@@ -1,3 +1,4 @@
+// app/conversation/page.tsx
 'use client';
 
 import { useState, useEffect } from "react";
@@ -8,6 +9,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { Heading } from "@/components/heading";
 import { useSession } from "next-auth/react";
 import ChatHistory from "@/components/ChatHistory";
+import { Loader } from "@/components/loader";
 
 interface ResponseEntry {
     question: string;
@@ -178,31 +180,32 @@ export default function Home() {
         updateVoices();
         window.speechSynthesis.onvoiceschanged = updateVoices;
     }, []);
-
+    
     return (
         <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 min-h-screen flex items-center justify-center py-5">
-            <div className="flex flex-col p-4 lg:p-8 w-full h-full relative mt-12 mx-auto">
-                <form onSubmit={(e) => { e.preventDefault(); generateText(); }} className="bg-gray-800 border border-gray-700 rounded-full p-4 sticky top-16 z-10 flex space-x-2 w-full lg:p-3">
-                    <Button
-                        type="submit"
-                        className="text-white p-2 rounded-full hover:bg-cyan-600 transition-transform transform hover:scale-105"
-                    >
-                        <Search />
-                    </Button>
-                    <input
-                        type="text"
-                        value={prompt}
-                        onChange={(e) => setPrompt(e.target.value)}
-                        placeholder="Enter your question here"
-                        className="flex-grow px-4 bg-transparent border-0 rounded outline-none text-white placeholder-gray-400 focus-visible:ring-0"
-                    />
-                    <SpeechRecognitionComponent />
-                </form>
+            <div className="flex flex-col p-4 lg:p-8 w-full h-full relative mx-auto">
+                <div className="flex lg:p-8 w-full h-full mx-auto z-10 mt-16 sticky top-24">
+                    <form onSubmit={(e) => { e.preventDefault(); generateText(); }} className="bg-gray-800 border border-gray-700 rounded-full p-4 sticky top-20 z-10 flex space-x-2 w-full lg:p-3">
+                        <Button
+                            type="submit"
+                            className="text-white p-2 rounded-full hover:bg-cyan-600 transition-transform transform hover:scale-105"
+                        >
+                            <Search />
+                        </Button>
+                        <input
+                            type="text"
+                            value={prompt}
+                            onChange={(e) => setPrompt(e.target.value)}
+                            placeholder="Enter your question here"
+                            className="flex-grow px-4 bg-transparent border-0 rounded outline-none text-white placeholder-gray-400 focus-visible:ring-0"
+                        />
+                        <SpeechRecognitionComponent />
+                    </form>
+                </div>
                 <div className="mt-4 flex-grow overflow-auto">
                     {loading ? (
-                        <div className="flex justify-center items-center h-full text-white font-roboto mt-56">
-                            <CircleEllipsis className="animate-spin text-purple-500" size={48} />
-                            <p className="ml-4">Master is thinking...</p>
+                        <div className="p-8 rounded-lg w-full flex items-center justify-center">
+                            <Loader />
                         </div>
                     ) : responses.length === 0 ? (
                         <div>

@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Button } from "@/components/ui/button";
-import { CircleEllipsis, Copy, Send } from "lucide-react";
+import { CircleEllipsis, Copy, MessageSquare, Send } from "lucide-react";
 import Notification from '@/components/Notification';
 import { UserAvatar } from '@/components/user-avatar';
+import { Heading } from '@/components/heading';
+import { Loader } from '@/components/loader';
 
 export default function Home() {
     const [prompt, setPrompt] = useState('');
@@ -89,12 +91,19 @@ export default function Home() {
                 </div>
                 <div className="mt-4 flex-grow overflow-auto">
                     {loading ? (
-                        <div className="flex justify-center items-center h-full text-white font-roboto">
-                            <CircleEllipsis className="animate-spin text-sky-400" size={48} />
-                            <p>Master is thinking...</p>
+                        <div className="p-8 rounded-lg w-full flex items-center justify-center">
+                            <Loader />
                         </div>
                     ) : responses.length === 0 ? (
-                        <p className="text-center text-gray-400 mt-28">AI Buddy</p>
+                        <div className="p-6 w-full max-w-2xl mx-auto mt-24 flex items-center justify-center shadow-md border rounded-md text-white">
+                            <Heading
+                                title={"Code Generation"}
+                                description={"Summarize any YouTube video quickly with our cutting-edge summarization tool."}
+                                icon={MessageSquare}
+                                iconColor={"text-cyan-200"}
+                                bgColor={"bg-gradient-to-r from-blue-700 via-cyan-500 to-teal-400"}
+                            />
+                        </div>
                     ) : (
                         <div className="font-montserrat space-y-4 p-8 w-full flex flex-col gap-x-8">
                             {responses.map((response, index) => (
@@ -110,7 +119,7 @@ export default function Home() {
                                     <div className="relative flex space-x-3">
                                         <img src="/logo.png" alt="bot-avatar" className="w-7 h-7 mt-3" />
                                         <div className="flex space-x-3 bg-slate-600 overflow-auto my-2 p-2 rounded-lg justify-start w-full">
-                                            <SyntaxHighlighter language="javascript" style={tomorrow}> 
+                                            <SyntaxHighlighter language="javascript" style={tomorrow}>
                                                 {response.answer}
                                             </SyntaxHighlighter>
                                         </div>

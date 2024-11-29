@@ -1,3 +1,4 @@
+// /component/ChatHistory
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
@@ -79,46 +80,53 @@ const CombinedChatHistory: React.FC<CombinedChatHistoryProps> = ({ onChatSelect 
         onChatSelect(chat.prompt, chat.response);
     };
 
-    if (loading) return <p>Loading chat history...</p>;
+    if (loading) return <p className="flex items-center justify-center text-slate-600">Loading chat history...</p>;
     if (error) return <p>Error: {error}</p>;
 
     const recentChats = chats.slice(0, 6);
 
     return (
         <div className="w-full max-w-4xl mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">Your recent chats</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+            <div className="flex flex-row w-full justify-between items-center">
+                <h2 className="text-xl font-serif mb-2 text-white">Your recent chats</h2>
+                <Button
+                    onClick={() => setShowAllChats(!showAllChats)}
+                    className="text-xl font-serif text-white bg-transparent"
+                >
+                    {showAllChats ? 'Hide chat history' : 'View all chats'}
+                    <ChevronRight size={16} className="ml-2" />
+                </Button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4 ">
                 {recentChats.map((chat) => (
                     <Card
                         key={chat.id}
-                        className="cursor-pointer hover:shadow-md transition-shadow"
+                        className="text-white cursor-pointer hover:bg-gray-700 transition-shadow bg-gray-800 border-gray-700"
                         onClick={() => handleChatClick(chat)}
                     >
-                        <CardHeader className="flex items-center space-x-2">
+                        <CardHeader className="flex items-start space-x-2">
                             <MessageSquare size={18} />
                             <span className="font-semibold truncate">{chat.prompt.substring(0, 30) || 'New chat'}</span>
                         </CardHeader>
-                        <CardContent>
+                        {/* <CardContent>
                             <p className="text-sm text-gray-500">{new Date(chat.timestamp).toLocaleDateString()}</p>
-                        </CardContent>
+                        </CardContent> */}
                     </Card>
                 ))}
             </div>
-            <Button onClick={() => setShowAllChats(!showAllChats)} className="w-full mb-4">
-                {showAllChats ? 'Hide full history' : 'View all chats'} <ChevronRight size={16} className="ml-2" />
-            </Button>
 
             {showAllChats && (
                 <div className="mt-8">
-                    <h2 className="text-2xl font-bold mb-4">Full Chat History</h2>
+                    <h2 className="text-xl font-serif mb-4 text-white">Full Chat History</h2>
                     {chats.map((chat, index) => (
                         <div
                             key={index}
-                            className="mb-8 p-4 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-600 "
+                            className="mb-8 p-4 bg-gray-700 rounded-lg cursor-pointer "
                             onClick={() => handleChatClick(chat)}
                         >
                             <div className="flex space-x-3 justify-end">
-                                <div className="flex space-x-3 bg-violet-300 overflow-auto my-2 p-2 rounded-lg justify-end">
+                                <div className="flex space-x-3 bg-gray-600 overflow-auto my-2 p-2 rounded-lg justify-end">
                                     <p>{chat.prompt.substring(0, 100)}...</p>
                                 </div>
                                 <div className="pt-3">
@@ -127,7 +135,7 @@ const CombinedChatHistory: React.FC<CombinedChatHistoryProps> = ({ onChatSelect 
                             </div>
                             <div className="flex space-x-3">
                                 <img src="/logo.png" alt="bot-avatar" className="w-7 h-7 mt-3" />
-                                <div className="flex space-x-3 bg-violet-300 overflow-auto my-2 p-2 rounded-lg justify-start">
+                                <div className="flex space-x-3 bg-gray-600 overflow-auto my-2 p-2 rounded-lg justify-start">
                                     <p dangerouslySetInnerHTML={{ __html: formatResponse(chat.response.substring(0, 100)) }} />
                                 </div>
                             </div>

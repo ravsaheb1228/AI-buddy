@@ -6,7 +6,10 @@ import  Link  from "next/link";
 import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { 
+    BookOpenText,
     Code, 
+    FileSpreadsheet, 
+    FileText, 
     ImageIcon, 
     ImagePlay, 
     LayoutDashboard, 
@@ -14,7 +17,8 @@ import {
     Music, 
     ScrollText, 
     Settings, 
-    VideoIcon 
+    VideoIcon,
+    
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -51,8 +55,21 @@ const routes = [
     {
         label: "Video summarizer",
         icon: ScrollText,
-        href: "/Summarize",
+        href: "/VideoSummarize",
         color: "text-cyan-700", 
+    },
+    {
+        label: "chat with PDF",
+        icon: BookOpenText,
+        href: "/pdfChat",
+        color: "text-white",
+    },
+    {
+        label: "Resume Builder",
+        icon: FileSpreadsheet,
+        href: "/Resume",
+        color: "text-white",
+        bgColor: "bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500",
     },
     {
         label: "Text to Video",
@@ -66,11 +83,11 @@ const routes = [
         href: "/Music",
         color: "text-emerald-500", 
     },
-    {
-        label: "Settings",
-        icon: Settings,
-        href: "/Settings", 
-    }
+    // {
+    //     label: "Settings",
+    //     icon: Settings,
+    //     href: "/Settings", 
+    // }
 
 ]
 const Sidebar = () => {

@@ -10,15 +10,20 @@ const LandingPage = () => {
     return (
         <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen flex flex-col">
             {/* Header */}
-            <header className="flex items-center p-6 bg-white shadow-lg fixed w-full z-50">
-                <motion.div
+            <header className="flex items-center p-3 bg-white shadow-lg fixed w-full z-50">
+                {/* <motion.div
                     className="relative w-16 h-16"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                </motion.div>
-                
+                </motion.div> */}
+                <div className="flex flex-row items-center">
+                    <img src={"/logo.png"} alt={"Logo"} className="rounded-full w-8 h-8" />
+                    <h1 className="text-xl font-bold font-sans text-black ml-4 tracking-wider whitespace-nowrap">
+                        AI Buddy
+                    </h1>
+                </div>
                 <div className="flex ml-auto space-x-6">
                     <Link href="/signin">
                         <Button className="text-base border border-blue-600 text-white hover:bg-blue-600 hover:text-white px-6 py-2 rounded-full transition duration-300">
@@ -31,13 +36,13 @@ const LandingPage = () => {
                         </Button>
                     </Link>
                 </div>
-            </header> 
+            </header>
 
             {/* Main Content */}
             <main className="flex-grow flex flex-col md:flex-row justify-center items-center pt-24 relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-white to-blue-100"></div>
                 <div className="flex flex-col md:flex-row items-center justify-center z-10 p-6 md:p-12">
-                    
+
                     {/* Text and Buttons */}
                     <motion.div
                         className="text-center text-gray-900 w-full md:w-1/2"
@@ -51,18 +56,18 @@ const LandingPage = () => {
                         <p className="text-lg md:text-xl font-light mb-8">
                             Explore the future of AI with tools for Chat, Code Generation, Image Creation, Video Making, and Audio Production. Unleash creativity like never before!
                         </p>
-                        <div className="mt-6 flex flex-row space-x-4 justify-center">
+                        {/* <div className="mt-6 flex flex-row space-x-4 justify-center">
                             <Link href={"/"}>
                                 <Button className="text-lg bg-blue-500 text-white px-8 py-3 rounded-full shadow-md hover:bg-blue-600 transition-transform duration-300">
                                     Get Started
                                 </Button>
                             </Link>
-                            <Link href="/learn-more">
+                            <Link href="/learnmore">
                                 <Button className="text-lg bg-gray-200 text-gray-800 px-8 py-3 rounded-full shadow-md hover:bg-gray-300 transition-transform duration-300">
                                     Learn More
                                 </Button>
                             </Link>
-                        </div>
+                        </div> */}
                     </motion.div>
 
                     {/* ImageSlider */}
@@ -130,6 +135,12 @@ const LandingPage = () => {
                             description: "Extract and summarize key information from PDFs, making it easier to review and analyze large documents.",
                             link: "/pdf-summary-demo",
                             gradient: "bg-gradient-to-r from-gray-400 to-gray-600",
+                        },
+                        {
+                            title: "Chat with PDF",
+                            description: "Quickly extract and summarize key information from PDFs for efficient document review and analysis.",
+                            link: "/pdf-summary-demo",
+                            gradient: "bg-gradient-to-r from-gray-400 to-gray-600",
                         }
                     ].map((model, index) => (
                         <motion.div
@@ -160,8 +171,8 @@ const LandingPage = () => {
                 </div>
             </section>
 
-                        {/* Footer */}
-                        <footer className="bg-gray-900 text-white py-8">
+            {/* Footer */}
+            <footer className="bg-gray-900 text-white py-8">
                 <section className="p-8">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mx-auto">
                         <div className="mt-3">
@@ -174,11 +185,14 @@ const LandingPage = () => {
                         </div>
                         <div className="mt-3">
                             <h6 className="text-uppercase mb-4 font-bold">Tools</h6>
-                            <p><a className="text-gray-400 hover:text-white">Chat</a></p>
+                            <p><a className="text-gray-400 hover:text-white">Conversation</a></p>
                             <p><a className="text-gray-400 hover:text-white">Code Generation</a></p>
                             <p><a className="text-gray-400 hover:text-white">Image Creation</a></p>
                             <p><a className="text-gray-400 hover:text-white">Video Making</a></p>
                             <p><a className="text-gray-400 hover:text-white">Audio Production</a></p>
+                            <p><a className="text-gray-400 hover:text-white">Video summarizer</a></p>
+                            <p><a className="text-gray-400 hover:text-white">pdf chat</a></p>
+                            <p><a className="text-gray-400 hover:text-white">Resume builder</a></p>
                         </div>
                         <div className="mt-3">
                             <h6 className="text-uppercase mb-4 font-bold">Resources</h6>
@@ -189,9 +203,9 @@ const LandingPage = () => {
                         </div>
                         <div className="mt-3">
                             <h6 className="text-uppercase mb-4 font-bold">Contact</h6>
-                            <p><i className="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-                            <p><i className="fas fa-envelope mr-3"></i> info@example.com</p>
-                            <p><i className="fas fa-phone mr-3"></i> + 01 234 567 89</p>
+                            <p><i className="fas fa-home mr-3"></i>Goregaon, Mumbai, Maharashtra 400063, India</p>
+                            <p><i className="fas fa-envelope mr-3"></i> aibuddy@gmail.com</p>
+                            <p><i className="fas fa-phone mr-3"></i> +19 8591281388</p>
                         </div>
                     </div>
                 </section>
