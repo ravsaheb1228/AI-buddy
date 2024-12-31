@@ -203,9 +203,11 @@ const LandingPage = () => {
                         </div>
                         <div className="mt-3">
                             <h6 className="text-uppercase mb-4 font-bold">Contact</h6>
-                            <p><i className="fas fa-home mr-3"></i>Goregaon, Mumbai, Maharashtra 400063, India</p>
-                            <p><i className="fas fa-envelope mr-3"></i> aibuddy@gmail.com</p>
+                            <p><i className="fas fa-phone mr-3"></i> Auther name : Ravsaheb Khairnar</p>
+                            <p><i className="fas fa-home mr-3"></i>Goregaon, Mumbai, Maharashtra 400063</p>
+                            <p><i className="fas fa-envelope mr-3"></i> dev1228@gmail.com</p>
                             <p><i className="fas fa-phone mr-3"></i> +19 8591281388</p>
+                            
                         </div>
                     </div>
                 </section>
